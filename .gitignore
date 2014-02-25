@@ -1,3 +1,4 @@
 /bomberman.iml
 /.idea
-/target
+/*.jar
+/lib
