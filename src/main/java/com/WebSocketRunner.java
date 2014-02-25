@@ -1,6 +1,7 @@
 package com;
 
 import com.utils.Board;
+import com.utils.BomberLogger;
 import org.apache.log4j.*;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
@@ -21,16 +22,14 @@ public class WebSocketRunner {
     private static final String SERVER = "ws://tetrisj.jvmhost.net:12270/codenjoy-contest/ws";
     //    private static final String SERVER = "ws://127.0.0.1:8080/codenjoy-contest/ws";
     private static String USER_NAME = "mental";
-    // Now we use one logger the BomberLogger
-    public static String LOGGER_NAME = "BomberLogger";
-    private static String LOG_FILE_NAME = "logs.txt";
+
 
     private WebSocket.Connection connection;
     private DirectionSolver solver;
     private WebSocketClientFactory factory;
 
     public WebSocketRunner(DirectionSolver solver) {
-        initLogger(LOG_FILE_NAME);
+        initLogger(BomberLogger.LOGGER_NAME);
         this.solver = solver;
     }
 
@@ -91,7 +90,7 @@ public class WebSocketRunner {
     }
 
     private void initLogger(String fileName){
-        Logger logger = LogManager.getLogger(LOGGER_NAME);
+        Logger logger = LogManager.getLogger(BomberLogger.LOGGER_NAME);
         Layout layout = new SimpleLayout();
         FileAppender appender = new FileAppender();
         appender.setFile(fileName);
