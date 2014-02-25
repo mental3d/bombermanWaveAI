@@ -21,6 +21,8 @@ public class WebSocketRunner {
     private static final String SERVER = "ws://tetrisj.jvmhost.net:12270/codenjoy-contest/ws";
     //    private static final String SERVER = "ws://127.0.0.1:8080/codenjoy-contest/ws";
     private static String USER_NAME = "mental";
+    // Now we use one logger the BomberLogger
+    public static String LOGGER_NAME = "BomberLogger";
     private static String LOG_FILE_NAME = "logs.txt";
 
     private WebSocket.Connection connection;
@@ -89,7 +91,7 @@ public class WebSocketRunner {
     }
 
     private void initLogger(String fileName){
-        Logger logger = LogManager.getLogger("Bomber");
+        Logger logger = LogManager.getLogger(LOGGER_NAME);
         Layout layout = new SimpleLayout();
         FileAppender appender = new FileAppender();
         appender.setFile(fileName);

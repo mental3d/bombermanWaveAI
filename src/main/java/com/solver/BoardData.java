@@ -1,8 +1,13 @@
 package com.solver;
 
+import com.WebSocketRunner;
 import com.utils.Board;
 import com.utils.Point;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Priority;
+
 import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: user
@@ -36,6 +41,9 @@ public class BoardData {
 
     private void convert(Board board)
     {
+        LogManager.getLogger(WebSocketRunner.LOGGER_NAME)
+                .debug("Class: " + getClass().getName() + " Message: Starting convert");
+
         System.out.print("start convert");
         List<Point> points = board.getBarriers();
         for(Point point : points)
