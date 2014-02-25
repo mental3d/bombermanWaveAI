@@ -5,7 +5,7 @@ import java.awt.*;
 
 import java.util.ArrayList;
 
-import com.solver.GameObject;
+import com.solver.GObj;
 import com.utils.Point;
 import javax.swing.JPanel;
 /**
@@ -20,9 +20,9 @@ public class DrawJPanel extends JPanel {
     //Ellipse2D.Double ddd;
 
     class AddObjDraw{
-        public GameObject.Type id;
+        public GObj id;
         public Point pos;
-        public AddObjDraw(GameObject.Type _id, Point _pos)
+        public AddObjDraw(GObj _id, Point _pos)
         {
             id = _id;
             pos = _pos;
@@ -56,7 +56,7 @@ public class DrawJPanel extends JPanel {
 
     }
 
-    public void drawObject(GameObject.Type id, Point pos)
+    public void drawObject(GObj id, Point pos)
     {
         pos = new Point(pos.getX()*cellSize, pos.getY()*cellSize);
         stack.add(new AddObjDraw(id, pos));

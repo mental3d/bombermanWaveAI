@@ -12,14 +12,15 @@ import com.utils.Board;
 
 import java.awt.*;
 import javax.swing.*;
+import com.solver.BoardData;
 
 public class GUIDebugger extends  Thread{
     private DrawJPanel draw;
-    private Board board = null;
+    private BoardData board = null;
     public GUIDebugger()
     {
         JFrame frame = new JFrame("Simple GUI");
-        draw = new DrawJPanel();
+        draw = new DrawJPanel(0,0,0);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.add(draw);
         frame.setSize(300, 300);
@@ -27,7 +28,7 @@ public class GUIDebugger extends  Thread{
         frame.setVisible(true);
     }
 
-    public void update(Board board)
+    public void update(BoardData board)
     {
         this.board = board;
     }
@@ -40,7 +41,7 @@ public class GUIDebugger extends  Thread{
             {
                 System.out.println("Привет из побочного потока!");
                 board = null;
-                draw.test();
+               // draw.test();
 
             }
         }

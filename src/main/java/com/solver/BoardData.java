@@ -1,7 +1,8 @@
 package com.solver;
 
-import java.util.ArrayList;
 import com.utils.Board;
+import com.utils.Point;
+import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  * User: user
@@ -9,20 +10,19 @@ import com.utils.Board;
  * Time: 16:01
  */
 public class BoardData {
-    private ArrayList<ArrayList<Integer>> cellBoard = new ArrayList<ArrayList<Integer>>();
+    private GObj [][]cellBoard;
     private int height, width;
     private int id;
 
-    public BoardData(int id, Board board)
+    public BoardData(Board board)
     {
-        this.id = id;
         initCellBoard(board.boardSize(), board.boardSize()); //fix внтури boardSize() тяжелая функция можно выполнить один раз в BoardRaw, так как размер доски const
+        convert(board);
     }
 
-    // Copy constructor
-    public BoardData(BoardData bd)
+    public BoardData(GObj [][]cellBoard)
     {
-
+        this.cellBoard = cellBoard;
     }
 
 
@@ -30,29 +30,35 @@ public class BoardData {
     {
         this.width = width;
         this.height = height;
-        for(int i = 0; i < width; i++)
-        {
-            cellBoard.add(new ArrayList<Integer>());
-        }
+        cellBoard = new GObj[width][height];
     }
 
 
     private void convert(Board board)
     {
-
-    }
-
-    public int getCell(int x, int y)
-    {
-        return  cellBoard.get(x).get(y);
-    }
-
-    public  ArrayList<ArrayList<Integer>> getCloneCellBoard()
-    {
-        ArrayList<ArrayList<Integer>> array = new ArrayList<ArrayList<Integer>>();
-        for(int i = 0; i < width; i++)
+        System.out.print("start convert");
+        List<Point> points = board.getBarriers();
+        for(Point point : points)
         {
-            array.add(new ArrayList<Integer>(cellBoard.get(i)));
+            cellBoard[point.getX()][point.getY()] = GObj.BARRIERS;
+        }
+        points = board.getDestroyWalls();
+        for(Point point : points)
+        {
+            cellBoard[point.getX()][point.getY()] = GObj.WALLS;
+        }
+    }
+
+    public GObj getCell(int x, int y)
+    {
+        return  cellBoard[x][y];
+    }
+
+    public GObj[][] cloneCellBoard()
+    {
+        GObj [][]array = cellBoard.clone();
+        for (int i = 0; i < cellBoard.length; i++) {
+            array[i] = array[i].clone();
         }
         return  array;
     }
