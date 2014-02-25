@@ -1,6 +1,7 @@
 package com;
 
 import com.utils.Board;
+import org.apache.log4j.*;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;
 
@@ -20,12 +21,14 @@ public class WebSocketRunner {
     private static final String SERVER = "ws://tetrisj.jvmhost.net:12270/codenjoy-contest/ws";
     //    private static final String SERVER = "ws://127.0.0.1:8080/codenjoy-contest/ws";
     private static String USER_NAME = "mental";
+    private static String LOG_FILE_NAME = "logs.txt";
 
     private WebSocket.Connection connection;
     private DirectionSolver solver;
     private WebSocketClientFactory factory;
 
     public WebSocketRunner(DirectionSolver solver) {
+        initLogger(LOG_FILE_NAME);
         this.solver = solver;
     }
 
@@ -83,5 +86,14 @@ public class WebSocketRunner {
                 }
             }
         }).get(5000, TimeUnit.MILLISECONDS);
+    }
+
+    private void initLogger(String fileName){
+        Logger logger = LogManager.getLogger("Bomber");
+        Layout layout = new SimpleLayout();
+        FileAppender appender = new FileAppender();
+        appender.setFile(fileName);
+        appender.setLayout(layout);
+        appender.activateOptions();
     }
 }
