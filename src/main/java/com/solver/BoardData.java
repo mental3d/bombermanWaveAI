@@ -44,7 +44,8 @@ public class BoardData {
 
     private void convert(Board board)
     {
-        BomberLogger.log("start convert", getClass().getName());
+        LogManager.getRootLogger().debug("start convert");
+
         List<Point> points = board.getBarriers();
         for(Point point : points)
         {

@@ -29,7 +29,7 @@ public class WebSocketRunner {
     private WebSocketClientFactory factory;
 
     public WebSocketRunner(DirectionSolver solver) {
-        initLogger(BomberLogger.LOGGER_NAME);
+
         this.solver = solver;
     }
 
@@ -87,14 +87,5 @@ public class WebSocketRunner {
                 }
             }
         }).get(5000, TimeUnit.MILLISECONDS);
-    }
-
-    private void initLogger(String fileName){
-        Logger logger = LogManager.getLogger(BomberLogger.LOGGER_NAME);
-        Layout layout = new SimpleLayout();
-        FileAppender appender = new FileAppender();
-        appender.setFile(fileName);
-        appender.setLayout(layout);
-        appender.activateOptions();
     }
 }
