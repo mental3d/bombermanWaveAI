@@ -42,4 +42,35 @@ public class Point {
     public int getY() {
         return y;
     }
+
+    public Point upPoint()
+    {
+        return new Point(x, y + 1);
+    }
+
+    public Point downPoint()
+    {
+        return new Point(x, y - 1);
+    }
+
+    public Point leftPoint()
+    {
+        return new Point(x - 1, y);
+    }
+
+    public Point rightPoint()
+    {
+        return new Point(x + 1, y);
+    }
+
+    public void move(Vector2d vect)
+    {
+        x += vect.x;
+        y += vect.y;
+    }
+
+    public Point movePoint(Vector2d vect)
+    {
+        return new Point((int)(x + vect.x), (int)(y + vect.y));
+    }
 }

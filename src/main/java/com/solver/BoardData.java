@@ -7,6 +7,7 @@ import com.utils.Point;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Priority;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class BoardData {
     private GObj [][]cellBoard;
     private int height, width;
     private int id;
+
 
     public BoardData(Board board)
     {
@@ -43,7 +45,6 @@ public class BoardData {
     private void convert(Board board)
     {
         BomberLogger.log("start convert", getClass().getName());
-
         List<Point> points = board.getBarriers();
         for(Point point : points)
         {
@@ -54,6 +55,31 @@ public class BoardData {
         {
             cellBoard[point.getX()][point.getY()] = GObj.WALLS;
         }
+        points = board.getMeatChoppers();
+        for(Point point : points)
+        {
+            cellBoard[point.getX()][point.getY()] = GObj.CHOPPERS;
+        }
+        points = board.getBombs();
+        for(Point point : points)
+        {
+            cellBoard[point.getX()][point.getY()] = GObj.BOMBS;
+        }
+        Collection<Point> points2 = board.getOtherBombermans();
+        for(Point point : points2)
+        {
+            cellBoard[point.getX()][point.getY()] = GObj.BOMBERMAN;
+        }
+        points = board.getBlasts();
+        for(Point point : points)
+        {
+            cellBoard[point.getX()][point.getY()] = GObj.BLASTS;
+        }
+    }
+
+    public GObj getCell(Point point)
+    {
+        return  cellBoard[point.getX()][point.getY()];
     }
 
     public GObj getCell(int x, int y)

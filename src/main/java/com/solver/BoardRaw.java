@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class BoardRaw {
     private ArrayList<BoardData> oldData = new ArrayList<BoardData>();
+    private ArrayList<BoardData> forecastData = new ArrayList<BoardData>();
     public BoardRaw()
     {
 
