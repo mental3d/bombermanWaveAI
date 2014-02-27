@@ -15,6 +15,8 @@ public class BoardRaw {
     private ArrayList<BoardData> oldData = new ArrayList<BoardData>();
     private ArrayList<BoardData> forecastData = new ArrayList<BoardData>();
     private Forecast forecast;
+    private double countError = 0;
+    private double countForecast = 0;
     public BoardRaw()
     {
         forecast = new Forecast();
@@ -29,6 +31,7 @@ public class BoardRaw {
         if(forecastData.size()>0)
         {
             logStatisticsTrueForecast(data, forecastData.get(0), 0, 0, data.width, data.height);
+            //logStatisticsTrueForecast(data, forecastData.get(0), 30, 30, 9, 15);
         }
         //debug//
 
@@ -55,15 +58,19 @@ public class BoardRaw {
             {
                 if(rb.getCell(i, j) != fb.getCell(i,j))
                 {
-                    dstr += "\terror: pos("+i+", "+j+")\t"+ "real("+rb.getCell(i, j)+")\tforecast("+ fb.getCell(i,j)+")\n" ;
-                    countError++;
+                    if(rb.getCell(i, j) == GObj.CHOPPERS || fb.getCell(i, j) == GObj.CHOPPERS)
+                    {
+                        dstr += "\terror: pos("+i+", "+j+")\t"+ "real("+rb.getCell(i, j)+")\tforecast("+ fb.getCell(i,j)+")\n" ;
+                        countError++;
+                    }
                 }
             }
         }
         dstr +=  "count chopper: " + rb.counChoppers+'\n';
-        dstr +=  "count error: " + countError;
+        this.countError += countError;
+        this.countForecast +=  rb.counChoppers;
+        dstr +=  "count error: " + countError+ " ("+ (this.countError/this.countForecast*100) + "%)\n";
         LogManager.getRootLogger().debug(dstr);
-
     }
 
 
