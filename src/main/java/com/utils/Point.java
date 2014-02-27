@@ -1,7 +1,7 @@
 package com.utils;
 
 /**
- * User: oleksandr.baglai
+ * User: mental
  */
 public class Point {
     private int x;

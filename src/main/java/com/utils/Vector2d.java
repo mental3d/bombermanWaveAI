@@ -20,6 +20,13 @@ public class Vector2d {
         y *= -1;
     }
 
+    public void normal()
+    {
+        double t = x;
+        x = y;
+        y = t;
+    }
+
     static public Vector2d UP()
     {
         return new Vector2d(0,1);

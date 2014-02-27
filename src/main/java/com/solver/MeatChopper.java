@@ -1,20 +1,19 @@
 package com.solver;
 
 /**
- * Created with IntelliJ IDEA.
- * User: user
+ * User: ${mental}
  * Date: 19.02.14
  * Time: 14:27
- * To change this template use File | Settings | File Templates.
- */
-
+*/
 import com.utils.Point;
 import com.utils.Vector2d;
+
 
 public class MeatChopper {
     private Point pos;
     private Vector2d vMove;
-    public MeatChopper(Point pos, Vector2d vMove)
+
+    public void init(Point pos, Vector2d vMove)
     {
         this.pos = pos;
         this.vMove = vMove;
@@ -30,8 +29,18 @@ public class MeatChopper {
         vMove.revert();
     }
 
+    public void rotate()
+    {
+        vMove.normal();
+    }
+
     public void move()
     {
         pos.move(vMove);
+    }
+
+    public Point getPos()
+    {
+        return new Point(pos);
     }
 }

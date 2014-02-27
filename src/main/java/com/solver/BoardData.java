@@ -1,11 +1,7 @@
 package com.solver;
 
-import com.WebSocketRunner;
 import com.utils.Board;
-import com.utils.BomberLogger;
 import com.utils.Point;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Priority;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,8 +14,10 @@ import java.util.List;
  */
 public class BoardData {
     private GObj [][]cellBoard;
-    private int height, width;
+    public int height, width;
     private int id;
+    public int counChoppers;
+    public int counWalls;
 
 
     public BoardData(Board board)
@@ -33,6 +31,12 @@ public class BoardData {
         this.cellBoard = cellBoard;
     }
 
+    public BoardData(BoardData boardData)
+    {
+        cellBoard = boardData.cloneCellBoard();
+    }
+
+
 
     private void initCellBoard(int width, int height)
     {
@@ -44,19 +48,19 @@ public class BoardData {
 
     private void convert(Board board)
     {
-        LogManager.getRootLogger().debug("start convert");
-
         List<Point> points = board.getBarriers();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.BARRIERS;
         }
         points = board.getDestroyWalls();
+        counWalls = points.size();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.WALLS;
         }
         points = board.getMeatChoppers();
+        counChoppers = points.size();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.CHOPPERS;
@@ -87,6 +91,12 @@ public class BoardData {
     {
         return  cellBoard[x][y];
     }
+
+    public void setCell(Point point, GObj type)
+    {
+        cellBoard[point.getX()][point.getY()] = type;
+    }
+
 
     public GObj[][] cloneCellBoard()
     {

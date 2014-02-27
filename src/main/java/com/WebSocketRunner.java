@@ -1,7 +1,6 @@
 package com;
 
 import com.utils.Board;
-import com.utils.BomberLogger;
 import org.apache.log4j.*;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketClientFactory;

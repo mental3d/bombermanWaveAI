@@ -11,7 +11,7 @@ public class YourDirectionSolver implements DirectionSolver {
     private GUIDebugger gui;
     private BoardRaw raw;
 
-    private int test = 0;
+
     public YourDirectionSolver()
     {
         super();
@@ -25,8 +25,7 @@ public class YourDirectionSolver implements DirectionSolver {
         // gui.update(data);
         System.out.print(raw.sizeHistory());
         System.out.print("\n ");
-        if(test%2 == 0)
-            return Direction.ACT.toString();
+
         return Direction.UP.toString();
     }
 }
