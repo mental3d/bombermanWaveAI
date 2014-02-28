@@ -42,6 +42,20 @@ public class BoardRaw {
         return  data;
     }
 
+    public BoardData getBoardData(int iter)
+    {
+        if(iter == 0)
+            return  oldData.get(oldData.size() - 1);
+        else if(iter <= forecastData.size())
+            return  forecastData.get(iter - 1);
+        else return  null;
+    }
+
+    public GObj getCell(int iter, int x, int y)
+    {
+        return getBoardData(iter).getCell(x, y);
+    }
+
     public int sizeHistory()
     {
         return oldData.size();
@@ -66,9 +80,9 @@ public class BoardRaw {
                 }
             }
         }
-        dstr +=  "count chopper: " + rb.counChoppers+'\n';
+        dstr +=  "count chopper: " + rb.countChoppers +'\n';
         this.countError += countError;
-        this.countForecast +=  rb.counChoppers;
+        this.countForecast +=  rb.countChoppers;
         dstr +=  "count error: " + countError+ " ("+ (this.countError/this.countForecast*100) + "%)\n";
         LogManager.getRootLogger().debug(dstr);
     }

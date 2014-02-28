@@ -8,6 +8,14 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  * @date 25.02.14
  */
 public class WaveAI {
+    private BoardRaw raw;
+    private WaveNode []waveNodes;
+    public WaveAI(BoardRaw raw)
+    {
+        this.raw = raw;
+        waveNodes = new WaveNode[4];
+    }
+
     /**
      *
      * @return whether we found something

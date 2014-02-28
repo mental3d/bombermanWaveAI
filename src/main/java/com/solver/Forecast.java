@@ -62,7 +62,10 @@ public class Forecast {
                 countChopper++;
             }
         }
-        calc(); //для теста один шаг
+        for(int i = 0; i < 10; i++)
+        {
+            calc();
+        }
     }
 
     private void calc()

@@ -16,9 +16,8 @@ public class BoardData {
     private GObj [][]cellBoard;
     public int height, width;
     private int id;
-    public int counChoppers;
-    public int counWalls;
-
+    public int countChoppers;
+    public int countWalls;
 
     public BoardData(Board board)
     {
@@ -36,15 +35,12 @@ public class BoardData {
         cellBoard = boardData.cloneCellBoard();
     }
 
-
-
     private void initCellBoard(int width, int height)
     {
         this.width = width;
         this.height = height;
         cellBoard = new GObj[width][height];
     }
-
 
     private void convert(Board board)
     {
@@ -54,13 +50,13 @@ public class BoardData {
             cellBoard[point.getX()][point.getY()] = GObj.BARRIERS;
         }
         points = board.getDestroyWalls();
-        counWalls = points.size();
+        countWalls = points.size();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.WALLS;
         }
         points = board.getMeatChoppers();
-        counChoppers = points.size();
+        countChoppers = points.size();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.CHOPPERS;
@@ -96,7 +92,6 @@ public class BoardData {
     {
         cellBoard[point.getX()][point.getY()] = type;
     }
-
 
     public GObj[][] cloneCellBoard()
     {
