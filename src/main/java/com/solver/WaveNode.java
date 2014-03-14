@@ -7,14 +7,20 @@ import com.utils.Point;
  */
 public class WaveNode {
     public WaveNode parent;
-    public Point pos;
+    public int x, y;
     public int score = 0;
 
-    public WaveNode(WaveNode parent, Point pos, int score)
+    public WaveNode(WaveNode parent, int x, int y, int score)
     {
         this.parent = parent;
-        this.pos = pos;
+        this.x = x;
+        this.y = y;
         this.score = score;
     }
 
+    public WaveNode(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
 }
