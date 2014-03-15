@@ -31,7 +31,7 @@ public class YourDirectionSolver implements DirectionSolver {
         System.out.print("\n ");
 
         if(raw.sizeHistory() > 3)
-           return ai.getDirection(board).toString();
+           return ai.getDirection(board);
         return Direction.STOP.toString();
     }
 }

@@ -23,6 +23,11 @@ public class Wave {
     private int[] dy = {0, 1, 0, -1};   // справа, снизу, слева и сверху
     private int currIter = 0;
 
+    public int evaluateChopper = 0;
+    public int evaluateFree = 1;
+    public int evaluateBomberman = 0;
+    public double score=0;
+
     public Wave(BoardRaw boardRaw)
     {
         this.raw = boardRaw;
@@ -77,7 +82,8 @@ public class Wave {
                 }
             }
             System.out.print(max.totalScore);
-            if(max.totalScore < 3) return Direction.ACT;
+            score = max.totalScore;
+           // if(max.totalScore < 3) return Direction.ACT;
             switch (max.direction)
             {
                 case 0:
@@ -111,12 +117,12 @@ public class Wave {
             WaveNode tempNode;
             for(int i = 0; i < 4; i++)
             {
-                int score = checkStep(node.x + dx[i], node.y + dy[i]);
+                double score = checkStep(node.x + dx[i], node.y + dy[i]);
                 if(score > 0)
                 {
                     int nx =  node.x + dx[i];
                     int ny =  node.y + dy[i];
-                    tempNode = new WaveNode(node, nx, ny, score/(currIter*0.9), i);
+                    tempNode = new WaveNode(node, nx, ny, (score), i);
                     lastNods.add(tempNode);
                     bEnd = false;
                     boardCells[nx][ny] = idWave;
@@ -135,7 +141,7 @@ public class Wave {
         }
     }
 
-    private int checkStep(int x, int y){
+    private double checkStep(int x, int y){
         if(x > width || y > height)
         {
             return 0;
@@ -151,7 +157,7 @@ public class Wave {
     }
 
 
-    private int evaluateCell(int x, int y)
+    private double evaluateCell(int x, int y)
     {
         GObj cell = raw.getCell(currIter, x, y);
         switch (cell)
@@ -163,13 +169,13 @@ public class Wave {
                 return 0;
 
             case BOMBERMAN:
-                break;
+                return evaluateBomberman/currIter;
+
             case CHOPPERS:
-                return 500;
+                return evaluateChopper/currIter;
 
             case FREE:
-
-                break;
+                return evaluateFree/(currIter*0.5);
         }
         return 1;
     }
