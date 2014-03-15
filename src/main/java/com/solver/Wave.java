@@ -1,6 +1,7 @@
 package com.solver;
 
 import com.Direction;
+import com.solver.gui.GUIDebugger;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,8 @@ public class Wave {
     {
         //System.out.print(raw.getCell(0, 0, 0)+" "+raw.getCell(0, 1, 1)+" "+raw.getCell(0, 2, 2)+" "+raw.getCell(0, 3, 3)+" "+raw.getCell(0, 4, 4)+" "+raw.getCell(0, 5, 5)+" \n");
         //System.out.print(raw.getCell(1, 0, 0)+" "+raw.getCell(1, 1, 1)+" "+raw.getCell(1, 2, 2)+" "+raw.getCell(1, 3, 3)+" "+raw.getCell(1, 4, 4)+" "+raw.getCell(1, 5, 5)+" ");
+        GUIDebugger.clearDebugDraw();
+        GUIDebugger.DrawObjDebug(GObj.GREEN, x, y);
         if(width == 0  || height == 0)
         {
             height = raw.height;
@@ -50,13 +53,14 @@ public class Wave {
 
         idWave++;
         currIter = 0;
-        endNods.clear();
-        firstNods.clear();
+        endNods = new ArrayList<WaveNode>();
+        firstNods = new ArrayList<WaveNode>();
         boardCells[x][y] = idWave;
+        lastNods = new ArrayList<WaveNode>();
         System.out.print("getDirection add rootNode\n");
         lastNods.add(new WaveNode(x, y));
         int i = 0;
-        while (lastNods.size() > 0 && i < 20)
+        while (lastNods.size() > 0 && i < Forecast.FORECAST_ITER - 5)
         {
             nextStep();
             i++;
@@ -72,7 +76,8 @@ public class Wave {
                     max = node;
                 }
             }
-
+            System.out.print(max.totalScore);
+            if(max.totalScore < 3) return Direction.ACT;
             switch (max.direction)
             {
                 case 0:
@@ -111,12 +116,14 @@ public class Wave {
                 {
                     int nx =  node.x + dx[i];
                     int ny =  node.y + dy[i];
-                    tempNode = new WaveNode(node, nx, ny, score/(currIter*0.97), i);
+                    tempNode = new WaveNode(node, nx, ny, score/(currIter*0.9), i);
                     lastNods.add(tempNode);
                     bEnd = false;
                     boardCells[nx][ny] = idWave;
+                    GUIDebugger.DrawObjDebug(GObj.BLUE, nx, ny);
                     if(currIter == 1)
                     {
+                        System.out.print("firstNods add");
                         firstNods.add(tempNode);
                     }
                 }
@@ -158,7 +165,7 @@ public class Wave {
             case BOMBERMAN:
                 break;
             case CHOPPERS:
-                return 200;
+                return 500;
 
             case FREE:
 

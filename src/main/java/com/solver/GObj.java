@@ -13,6 +13,8 @@ public enum GObj {
         BOMBS,
         BOMBERMAN,
         CHOPPERS,
-        BLASTS
+        BLASTS,
+        BLUE,
+        GREEN
 
 }

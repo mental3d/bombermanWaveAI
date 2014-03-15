@@ -23,10 +23,12 @@ public class GUIDebugger extends  Thread{
     private BoardData boardData;
     private Board board;
     static private GUIDebugger instance;
+    static private DrawJPanel sDraw;
     public GUIDebugger()
     {
         JFrame frame = new JFrame("Simple GUI");
         draw = new DrawJPanel(800,800,20);
+        sDraw = draw;
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.add(draw);
         frame.setSize(700, 700);
@@ -48,19 +50,24 @@ public class GUIDebugger extends  Thread{
 
     static public void DrawObjDebug(GObj id, Point point)
     {
-        instance.drawObjDebug(id, point.getX(), point.getY());
+        sDraw.drawObjectDebug(id, point.getX(), point.getY());
     }
 
     static public void DrawObjDebug(GObj id, int x, int y)
     {
-        instance.drawObjDebug(id, x, y);
+        sDraw.drawObjectDebug(id, x, y);
     }
 
-    public void drawObjDebug(GObj id, int x, int y)
+    static public void DrawObjOne(GObj id, int x, int y)
     {
-        draw.drawObjectDebug(id, x, y);
-        draw.updateUI();
+        sDraw.drawObject(id, x, y);
     }
+
+    static public void clearDebugDraw()
+    {
+       sDraw.clearDebugDraw();
+    }
+
 
     @Override
     public void run()

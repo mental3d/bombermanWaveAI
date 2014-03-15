@@ -18,7 +18,7 @@ public class Forecast {
     private int countChopper;
     private ArrayList<BoardData> result;
     private BoardData lastResult;
-    static public int FORECAST_ITER = 30;
+    static public int FORECAST_ITER = 20;
 
     public Forecast()
     {
