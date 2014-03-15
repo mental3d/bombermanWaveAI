@@ -24,13 +24,13 @@ public class WaveAI {
     {
         this.raw = raw;
         chaseChopperWave = new Wave(raw);
-        chaseChopperWave.evaluateChopper = 2000;
+        chaseChopperWave.evaluateChopper = 10000;
         chaseChopperWave.findObj = GObj.CHOPPERS;
         runOffWave = new Wave(raw);
         runOffWave.evaluateChopper = 0;
-        runOffWave.evaluateFree = 30;
+        runOffWave.evaluateFree = 100;
         chaseBombermanWave = new Wave(raw);
-        chaseBombermanWave.evaluateBomberman = 6000;
+        chaseBombermanWave.evaluateBomberman = 90000;
         chaseBombermanWave.findObj = GObj.BOMBERMAN;
     }
 
@@ -40,7 +40,7 @@ public class WaveAI {
         x =  point.getX();
         y =  point.getY();
         Strategy strategy = chooseStrategy();
-        System.out.print("\n "+strategy + '\n');
+        System.out.print(strategy+" \n");
         switch (strategy)
         {
             case ACT:
@@ -55,7 +55,6 @@ public class WaveAI {
 
     private Strategy chooseStrategy()
     {
-        System.out.print("choose strtegy\n");
         if(timerRunOff != 0)
         {
             timerRunOff--;
@@ -63,20 +62,17 @@ public class WaveAI {
         }
 
         for(int k=1; k<4;k++)
-        for(int iter = 0; iter < 3; iter++)
+        for(int iter = 0; iter < 6; iter++)
         {
             for(int i =0; i < 5; i++)
             {
-                System.out.print("choose strtegy, cell check iter"+iter+"\t "+(x+dx[i])+" "+ (y+dy[i])+'\t');
                 try
                 {
                     GObj cell = raw.getCell(iter, x+dx[i]*k, y+dy[i]*k);
 
-
-                    System.out.print(cell+ "\n ");
                     if(cell == GObj.CHOPPERS || cell == GObj.BOMBERMAN)
                     {
-                        timerRunOff = 7;
+                        timerRunOff = 6;
                         return Strategy.ACT;
                     }
                 }
@@ -98,7 +94,6 @@ public class WaveAI {
             if(chaseChopperWave.score < 20)
             {
                 timerRunOff = 6;
-                System.out.print("ass fire");
                 return Direction.ACT.toString();
             }
             return chopper.toString();

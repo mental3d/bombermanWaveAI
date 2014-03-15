@@ -24,8 +24,9 @@ public class Wave {
     private int currIter = 0;
 
     public int evaluateChopper = 0;
-    public int evaluateFree = 1;
+    public int evaluateFree = 10;
     public int evaluateBomberman = 0;
+    private double evaluateBlast = 0.01;
     public GObj findObj;
     private boolean bFind = false;
     public double score=0;
@@ -53,10 +54,6 @@ public class Wave {
             width = raw.width;
             boardCells = new int[width][height];
         }
-        if(boardCells == null)
-        {
-            System.out.print("\nWave boardCells == null\n");
-        }
 
         bFind = false;
         idWave++;
@@ -65,15 +62,21 @@ public class Wave {
         firstNods = new ArrayList<WaveNode>();
         boardCells[x][y] = idWave;
         lastNods = new ArrayList<WaveNode>();
-        System.out.print("getDirection add rootNode\n");
         lastNods.add(new WaveNode(x, y));
+        if(raw.getCell(0,x,y) == GObj.FREE)
+        {
+            evaluateBlast = 0;
+        }
+        else
+        {
+            evaluateBlast = 0.01;
+        }
         int i = 0;
         while (lastNods.size() > 0 && i < Forecast.FORECAST_ITER - 5 && !bFind)
         {
             nextStep();
             i++;
         }
-        System.out.print("getDirection end nextStep "+firstNods.size()+'\n');
         if(firstNods.size()>0)
         {
             WaveNode max = firstNods.get(0);
@@ -84,9 +87,7 @@ public class Wave {
                     max = node;
                 }
             }
-            System.out.print(max.totalScore);
             score = max.totalScore;
-           // if(max.totalScore < 3) return Direction.ACT;
             switch (max.direction)
             {
                 case 0:
@@ -104,7 +105,6 @@ public class Wave {
 
     private void nextStep()
     {
-      //  System.out.print("nextStep\n");
         currIter++;
         oldLastNods = lastNods;
         lastNods = new ArrayList<WaveNode>();
@@ -132,7 +132,6 @@ public class Wave {
                     GUIDebugger.DrawObjDebug(GObj.BLUE, nx, ny);
                     if(currIter == 1)
                     {
-                        System.out.print("firstNods add");
                         firstNods.add(tempNode);
                     }
                 }
@@ -171,8 +170,9 @@ public class Wave {
             case BOMBS:
             case WALLS:
             case BARRIERS:
-            case BLASTS:
                 return 0;
+            case BLASTS:
+                return 0.000001;
 
             case BOMBERMAN:
                 return evaluateBomberman/currIter;

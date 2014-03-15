@@ -101,9 +101,11 @@ public class DrawJPanel extends JPanel {
         pos = new Point(pos.getX()*cellSize, pos.getY()*cellSize);
         switch (id)
         {
+            case BLASTS:
             case CHOPPERS:
                 stackUpLayer.add(new AddObjDraw(id, pos));
                 break;
+
             default:
             stack.add(new AddObjDraw(id, pos));
         }
@@ -151,6 +153,9 @@ public class DrawJPanel extends JPanel {
                 g.drawOval(addObjDraw.pos.getX(), addObjDraw.pos.getY(), cellSize, cellSize);
                 break;
             case BLASTS:
+                g.setColor(Color.ORANGE);
+                g.fillRect(addObjDraw.pos.getX(), addObjDraw.pos.getY(), cellSize, cellSize);
+                g.drawRect(addObjDraw.pos.getX(), addObjDraw.pos.getY(), cellSize, cellSize);
                 break;
 
         }

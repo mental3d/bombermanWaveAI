@@ -21,6 +21,9 @@ public class BoardData {
     public int countChoppers;
     public int countWalls;
 
+    private int[] dx = {0,1, 0, -1, 0};   // смещения, соответствующие соседям ячейки
+    private int[] dy = {0,0, 1, 0, -1};   // справа, снизу, слева и сверху
+
     public BoardData(Board board)
     {
         initCellBoard(board.boardSize(), board.boardSize()); //fix внтури boardSize() тяжелая функция можно выполнить один раз в BoardRaw, так как размер доски const
@@ -61,12 +64,12 @@ public class BoardData {
         height = width;
         List<Point> points = board.getBarriers();
         cellBoard[1][1] = GObj.BARRIERS;
-
+        testDrawCurrBoardData();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.BARRIERS;
         }
-
+        //testDrawCurrBoardData();
         points = board.getDestroyWalls();
         countWalls = points.size();
         for(Point point : points)
@@ -79,21 +82,43 @@ public class BoardData {
         {
             cellBoard[point.getX()][point.getY()] = GObj.CHOPPERS;
         }
-        points = board.getBombs();
-        for(Point point : points)
-        {
-            cellBoard[point.getX()][point.getY()] = GObj.BOMBS;
-        }
         Collection<Point> points2 = board.getOtherBombermans();
         for(Point point : points2)
         {
             cellBoard[point.getX()][point.getY()] = GObj.BOMBERMAN;
         }
-        points = board.getBlasts();
+        points = board.getBombs();
+        for(Point point : points)
+        {
+            for(int i =0; i < 5; i++)
+            {
+                try
+                {
+                    for(int k=1; k<6;k++)
+                    {
+                        if(cellBoard[point.getX()+dx[i]*k][point.getY()+dy[i]*k] == GObj.FREE || cellBoard[point.getX()+dx[i]*k][point.getY()+dy[i]*k] == GObj.BOMBERMAN)
+                        {
+                            cellBoard[point.getX()+dx[i]*k][point.getY()+dy[i]*k] = GObj.BLASTS;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                catch(Exception e)
+                {
+                    continue;
+                }
+            }
+            cellBoard[point.getX()][point.getY()] = GObj.BOMBS;
+        }
+
+        /*points = board.getFutureBlasts();
         for(Point point : points)
         {
             cellBoard[point.getX()][point.getY()] = GObj.BLASTS;
-        }
+        } */
     }
 
     public GObj getCell(Point point)
@@ -141,7 +166,7 @@ public class BoardData {
             for(int y = 0; y < cellBoard.length; y++)
             {
                 GUIDebugger.DrawObjDebug(cellBoard[x][y],x,y);
-         //       System.out.print("\t"+cellBoard[x][y]);
+
             }
         }
     }

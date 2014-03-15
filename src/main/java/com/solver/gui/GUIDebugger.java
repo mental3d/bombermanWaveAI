@@ -90,13 +90,13 @@ public class GUIDebugger extends  Thread{
             while(true);
         }
         catch(InterruptedException e) {
-            System.out.println("the thread  was interrupted.");
+
         }
     }
 
     private void runDrawBoardData()
     {
-        System.out.println("ui boardGObjData thread");
+
         for(int x = 0; x < boardGObjData.length; x++)
         {
             for(int y = 0; y < boardGObjData.length; y++)
@@ -110,7 +110,7 @@ public class GUIDebugger extends  Thread{
 
     public void runDrawBoard()
     {
-        System.out.println("ui board thread");
+
         List<Point> points = board.getBarriers();
         for(Point point : points)
         {
