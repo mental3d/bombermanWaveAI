@@ -24,12 +24,14 @@ public class WaveAI {
     {
         this.raw = raw;
         chaseChopperWave = new Wave(raw);
-        chaseChopperWave.evaluateChopper = 200;
+        chaseChopperWave.evaluateChopper = 2000;
+        chaseChopperWave.findObj = GObj.CHOPPERS;
         runOffWave = new Wave(raw);
         runOffWave.evaluateChopper = 0;
         runOffWave.evaluateFree = 30;
         chaseBombermanWave = new Wave(raw);
-        chaseBombermanWave.evaluateBomberman = 600;
+        chaseBombermanWave.evaluateBomberman = 6000;
+        chaseBombermanWave.findObj = GObj.BOMBERMAN;
     }
 
     public String getDirection(Board board)
@@ -44,9 +46,7 @@ public class WaveAI {
             case ACT:
                 return Direction.ACT.toString()+","+runOffWave.getDirection(point.getX(), point.getY()).toString();
             case CHASE:
-                return chase().toString();
-            //case CHASE_BOMBERMAN:
-                //return chaseBombermanWave.getDirection(point.getX(), point.getY()).toString();
+                return chase();
             case RUN_OFF:
                 return runOffWave.getDirection(point.getX(), point.getY()).toString();
         }
@@ -62,8 +62,8 @@ public class WaveAI {
             return Strategy.RUN_OFF;
         }
 
-        for(int k=1; k<3;k++)
-        for(int iter = 0; iter < 5; iter++)
+        for(int k=1; k<4;k++)
+        for(int iter = 0; iter < 3; iter++)
         {
             for(int i =0; i < 5; i++)
             {
@@ -89,17 +89,28 @@ public class WaveAI {
         return Strategy.CHASE;
     }
 
-    private Direction chase()
+    private String chase()
     {
         Direction chopper = chaseChopperWave.getDirection(x, y);
         Direction bomberman = chaseBombermanWave.getDirection(x, y);
         if(chaseChopperWave.score > chaseBombermanWave.score)
         {
-            return chopper;
+            if(chaseChopperWave.score < 20)
+            {
+                timerRunOff = 6;
+                System.out.print("ass fire");
+                return Direction.ACT.toString();
+            }
+            return chopper.toString();
         }
         else
         {
-            return bomberman;
+            if(chaseBombermanWave.score < 20)
+            {
+                timerRunOff = 6;
+                return Direction.ACT.toString();
+            }
+            return bomberman.toString();
         }
     }
 

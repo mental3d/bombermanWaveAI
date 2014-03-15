@@ -26,6 +26,8 @@ public class Wave {
     public int evaluateChopper = 0;
     public int evaluateFree = 1;
     public int evaluateBomberman = 0;
+    public GObj findObj;
+    private boolean bFind = false;
     public double score=0;
 
     public Wave(BoardRaw boardRaw)
@@ -56,6 +58,7 @@ public class Wave {
             System.out.print("\nWave boardCells == null\n");
         }
 
+        bFind = false;
         idWave++;
         currIter = 0;
         endNods = new ArrayList<WaveNode>();
@@ -65,7 +68,7 @@ public class Wave {
         System.out.print("getDirection add rootNode\n");
         lastNods.add(new WaveNode(x, y));
         int i = 0;
-        while (lastNods.size() > 0 && i < Forecast.FORECAST_ITER - 5)
+        while (lastNods.size() > 0 && i < Forecast.FORECAST_ITER - 5 && !bFind)
         {
             nextStep();
             i++;
@@ -160,6 +163,9 @@ public class Wave {
     private double evaluateCell(int x, int y)
     {
         GObj cell = raw.getCell(currIter, x, y);
+        if(findObj != null)
+            if(cell == findObj)
+                bFind = true;
         switch (cell)
         {
             case BOMBS:
