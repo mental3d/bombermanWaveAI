@@ -17,6 +17,7 @@ public class BoardRaw {
     private Forecast forecast;
     private double countError = 0;
     private double countForecast = 0;
+    public int width = 0 , height = 0;
     public BoardRaw()
     {
         forecast = new Forecast();
@@ -24,16 +25,21 @@ public class BoardRaw {
 
     public BoardData setBoard(Board board)
     {
+        if(width == 0)
+        {
+            width = board.boardSize();
+            height = width;
+        }
         BoardData data = new BoardData(board);
         oldData.add(data);
 
-        //debug//
+        /*//debug//
         if(forecastData.size()>0)
         {
             logStatisticsTrueForecast(data, forecastData.get(0), 0, 0, data.width, data.height);
             //logStatisticsTrueForecast(data, forecastData.get(0), 30, 30, 9, 15);
         }
-        //debug//
+        //debug//*/
 
         if(oldData.size()>2)
         {

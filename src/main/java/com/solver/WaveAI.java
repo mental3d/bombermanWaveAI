@@ -1,6 +1,9 @@
 package com.solver;
 
 
+import com.Direction;
+import com.utils.Board;
+import com.utils.Point;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -9,11 +12,17 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class WaveAI {
     private BoardRaw raw;
-    private WaveNode []waveNodes;
+    private Wave simpleWave;
     public WaveAI(BoardRaw raw)
     {
         this.raw = raw;
-        waveNodes = new WaveNode[4];
+        simpleWave = new Wave(raw);
+    }
+
+    public Direction getDirection(Board board)
+    {
+        Point point = board.getBomberman();
+        return simpleWave.getDirection(point.getX(), point.getY());
     }
 
     /**

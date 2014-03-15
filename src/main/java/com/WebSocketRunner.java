@@ -20,7 +20,7 @@ public class WebSocketRunner {
 
     private static final String SERVER = "ws://tetrisj.jvmhost.net:12270/codenjoy-contest/ws";
     //    private static final String SERVER = "ws://127.0.0.1:8080/codenjoy-contest/ws";
-    private static String USER_NAME = "mental";
+    private static String USER_NAME = "mental3";
 
 
     private WebSocket.Connection connection;

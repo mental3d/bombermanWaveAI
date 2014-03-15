@@ -18,6 +18,7 @@ public class Forecast {
     private int countChopper;
     private ArrayList<BoardData> result;
     private BoardData lastResult;
+    static public int FORECAST_ITER = 30;
 
     public Forecast()
     {
@@ -35,7 +36,6 @@ public class Forecast {
         this.result = result;
         lastResult = oldData.get(oldData.size() - 1);
         BoardData boardData;
-        Vector2d vect;
         countChopper = 0;
         List<Point> points = board.getMeatChoppers();
         for(Point point : points)
@@ -62,7 +62,7 @@ public class Forecast {
                 countChopper++;
             }
         }
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < FORECAST_ITER; i++)
         {
             calc();
         }

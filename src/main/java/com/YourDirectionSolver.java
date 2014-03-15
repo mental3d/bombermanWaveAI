@@ -10,22 +10,28 @@ import com.utils.Board;
 public class YourDirectionSolver implements DirectionSolver {
     private GUIDebugger gui;
     private BoardRaw raw;
+    private WaveAI ai;
 
 
     public YourDirectionSolver()
     {
         super();
         raw = new BoardRaw();
-      // gui = new GUIDebugger();
-      //  gui.start();
+        ai = new WaveAI(raw);
+        gui = new GUIDebugger();
+        gui.start();
     }
     @Override
     public String get(Board board) {
         BoardData data = raw.setBoard(board);
-        // gui.update(data);
+        //System.out.print("clone boardData is "+data.testClone()+'\n');
+        gui.setData(data);
+       // gui.setData(board);
         System.out.print(raw.sizeHistory());
         System.out.print("\n ");
 
-        return Direction.UP.toString();
+        if(raw.sizeHistory() > 3)
+           return ai.getDirection(board).toString();
+        return Direction.STOP.toString();
     }
 }
